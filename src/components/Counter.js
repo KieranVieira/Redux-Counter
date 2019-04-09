@@ -3,15 +3,31 @@ import { connect } from 'react-redux';
 import { increment, decrement } from '../actions';
 
 class Counter extends Component {
-    incrementIfOdd = () => {
+    incrementIfOdd = (e,count) => {
         // Stretch Problem: Implement an increment function that
         // only increments if the counter value is odd
+        e.preventDefault();
+        if(count%2 !== 0 ){
+            this.props.increment(count);
+        }
     };
 
-    incrementAsync = () => {
+    incrementAsync = (e,count) => {
         // Stretch Problem: Implement an increment function that
         // increments after waiting for one second
+        e.preventDefault();
+        setTimeout(() => this.props.increment(count), 1000)
     };
+
+    increment = (e,count) => {
+        e.preventDefault();
+        this.props.increment(count);
+    }
+
+    decrement = (e,count) => {
+        e.preventDefault();
+        this.props.decrement(count);
+    }
 
     render() {
         // Fill in the two button onClick methods
@@ -20,20 +36,20 @@ class Counter extends Component {
         return (
             <p>
                 Clicked: {this.props.count} times
-                <button onClick={() => /* Fill me in */ }>
+                <button onClick={(e) => this.increment(e,this.props.count) }>
                     +
                 </button>
-                <button onClick={() => /* Fill me in */ }>
+                <button onClick={(e) => this.decrement(e,this.props.count) }>
                     -
                 </button>
                  {/* Uncomment these button tags if you got
                 around to implementing the extra credit functions */}
-                {/* <button onClick={this.incrementIfOdd}>
+                <button onClick={(e) => this.incrementIfOdd(e,this.props.count)}>
                     Increment if odd
                 </button>
-                <button onClick={this.incrementAsync}>
+                <button onClick={(e) => this.incrementAsync(e,this.props.count)}>
                     Increment async
-                </button>  */}
+                </button> 
             </p>
         );
     }
